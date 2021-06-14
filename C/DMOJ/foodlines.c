@@ -1,8 +1,10 @@
 #include <stdio.h> 
 
 // DMOJ problem problem
-// description: given N lines, M new peoples and 
-// number of people in each line. If each of these M people join the shortest line one at time.  Find the number of people on the line each of them join excluding them
+// description: given N lines, M new peoples and number of
+// people in each line. If each of these M people join the 
+// shortest line one at time.  Find the number of people on 
+// the line each of them join excluding them
 // input:
 // N M
 // a_1 a_2 ... a_N
