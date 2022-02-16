@@ -22,7 +22,8 @@ g = [(str(i), i**5) for i in p]
 
 def InStringRemove(digits, fifth_sum):
     '''
-    checks if characters in chars are in string and remove the first instance of its appearance.
+    checks if characters in chars are in string and remove the first
+    instance of its appearance.
     Otherwise it just return the string unaltered
     '''
     fifth_sum = str(fifth_sum)
@@ -36,6 +37,10 @@ def InStringRemove(digits, fifth_sum):
         return True
 
 def ConcatDigits(num1, num2):
+    '''
+    takes a pair num1 and num2 and merge the digits and also sum their fifth
+    powers
+    '''
     two_digits = []
     for i in range(len(num1)):
         for k in range(i, len(num2)):
