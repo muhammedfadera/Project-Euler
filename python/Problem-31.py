@@ -20,28 +20,32 @@ denominations.sort(reverse = True)
 #     would have gave you an empty list
 #     '''
 #     if start == end:
-#         return [end]
+#         return [end]      
 #     return range(start, end)
 #
 #
-# list(range(1, 1))
 def n_ways(x, den = denominations):
     denominations = den[:]
     res = 0 # keep track of the sum
     while len(denominations) != 0:
+        # take the current largest elements and remove it from the list of
+        # denominations.
         k = denominations[0]
         denominations.remove(k)
         if k > x:
             continue
+        # n her is the maximum number of ways one could denominations k
         n = x // k
+        n += 1
         if x % k == 0:
             res += 1
-            for i in range(1, n):
-                res += n_ways(x - i*k, denominations)
-        else:
-            for i in range(1, n + 1):
-                res += n_ways(x - i*k, denominations)
+            n -= 1;
+        for i in range(1, n):
+            res += n_ways(x - i*k, denominations)
+        # else:
+        #     for i in range(1, n + 1):
+                # res += n_ways(x - i*k, denominations)
     return res
-
+n_ways(200)
 # the solution above is correct
 # now we need to actually print a list of all of the different combinations

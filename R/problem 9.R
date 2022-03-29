@@ -12,9 +12,12 @@ for(a in 100:500){
     for(c in 100:500){
       if(a<b&&b<c){
       if((a^2+b^2)==c^2&&(a+b+c)==1000){
-      cat('The pythagoras triples are', a,',', b,', and', c, 'and their product is', a*b*c)
+        break
       }
     }
-   }
+    }
   }
- }
+}
+
+
+cat('The pythagoras triples are', a,',', b,', and', c, 'and their product is', a*b*c)
