@@ -50,7 +50,7 @@ def ConcatDigits(num1, num2):
     return two_digits
 
 two_digits = ConcatDigits(g, g); two_digits
-three_digits = ConcatDigits(g, two_digits); three_digits
+three_digits = ConcatDigits(g, two_digits)
 four_digits = ConcatDigits(g, three_digits)
 five_digits = ConcatDigits(g, four_digits)
 six_digits = ConcatDigits(g, five_digits)

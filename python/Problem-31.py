@@ -24,6 +24,9 @@ denominations.sort(reverse = True)
 #     return range(start, end)
 #
 #
+from functools import lru_cache
+
+# @lru_cache
 def n_ways(x, den = denominations):
     denominations = den[:]
     res = 0 # keep track of the sum
@@ -47,5 +50,6 @@ def n_ways(x, den = denominations):
                 # res += n_ways(x - i*k, denominations)
     return res
 n_ways(200)
+n_ways(400)
 # the solution above is correct
 # now we need to actually print a list of all of the different combinations
