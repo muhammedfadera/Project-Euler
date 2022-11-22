@@ -17,8 +17,10 @@
 # 2, 3, 4, ..., n at a time. Check if the numbers involved all appear in the result.
 # if so this number can be written as sum of the 5th power of its digit
 
+#%%
+n = 5
 p = range(10)
-g = [(str(i), i**5) for i in p]
+g = [(str(i), i**n) for i in p]
 
 def InStringRemove(digits, fifth_sum):
     '''
@@ -50,7 +52,7 @@ def ConcatDigits(num1, num2):
     return two_digits
 
 two_digits = ConcatDigits(g, g); two_digits
-three_digits = ConcatDigits(g, two_digits); three_digits
+three_digits = ConcatDigits(g, two_digits)
 four_digits = ConcatDigits(g, three_digits)
 five_digits = ConcatDigits(g, four_digits)
 six_digits = ConcatDigits(g, five_digits)
@@ -65,5 +67,5 @@ for num in all_nums:
         res.append(num[1])
 
 print('The sum of all numbers expressible as the sum' + \
-    f'of the fifth power of its digits is {sum(res)}')
+    f'of the {n}th power of its digits is {sum(res)}')
 res
