@@ -10,6 +10,7 @@
 # How many different ways can £2 be made using any number of coins?
 
 # currency denominations
+#%%
 denominations = [1, 2, 5, 10, 20, 50, 100, 200]
 denominations.sort(reverse = True)
 
@@ -20,7 +21,7 @@ denominations.sort(reverse = True)
 #     would have gave you an empty list
 #     '''
 #     if start == end:
-#         return [end]      
+#         return [end]
 #     return range(start, end)
 #
 #
@@ -49,3 +50,5 @@ def n_ways(x, den = denominations):
 n_ways(200)
 # the solution above is correct
 # now we need to actually print a list of all of the different combinations
+
+
