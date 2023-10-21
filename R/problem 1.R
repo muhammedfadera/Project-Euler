@@ -4,12 +4,12 @@
 
 summultiples <-function(x){
       i <- 2:(x-1)
-      m <- i[i%%3==0|i%%5==0]
+      m <- i[i%%2==0|i%%5==0]
         return(sum(m))
 }
 summultiples(1000)
 
 
-i <- 2:1000
-m <- i[i%%3==0|i%%5==0]
-sum(m)
+# i <- 2:1000
+# m <- i[i%%3==0|i%%5==0]
+# sum(m)

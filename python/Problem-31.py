@@ -10,25 +10,13 @@
 # How many different ways can £2 be made using any number of coins?
 
 # currency denominations
+# denominations = [25, 50, 10, 20, 50, 100, 200, 500, 1_000, 2_000]
 denominations = [1, 2, 5, 10, 20, 50, 100, 200]
 denominations.sort(reverse = True)
 
-# def Range(start, end):
-#     '''
-#     this is range function works just like range function in base python except
-#     that for the case where start = end, it returns the list [end] while python
-#     would have gave you an empty list
-#     '''
-#     if start == end:
-#         return [end]      
-#     return range(start, end)
-#
-#
-from functools import lru_cache
-
-# @lru_cache
-def n_ways(x, den = denominations):
+def n_ways(x, den = denominations, res_dict = {}, atom = 1):
     denominations = den[:]
+    denominations = [atom*d for d in denominations]
     res = 0 # keep track of the sum
     while len(denominations) != 0:
         # take the current largest elements and remove it from the list of
@@ -37,19 +25,24 @@ def n_ways(x, den = denominations):
         denominations.remove(k)
         if k > x:
             continue
-        # n her is the maximum number of ways one could denominations k
+        # n here is the maximum number of ways one could denominations k
         n = x // k
         n += 1
         if x % k == 0:
             res += 1
-            n -= 1;
+            n -= 1
         for i in range(1, n):
-            res += n_ways(x - i*k, denominations)
-        # else:
-        #     for i in range(1, n + 1):
-                # res += n_ways(x - i*k, denominations)
-    return res
-n_ways(200)
-n_ways(400)
+            try:
+                curr = res_dict['(' + str(n) + ',' +  str(k) + ',' + str(i) + ')']
+                res += curr
+            except KeyError:
+                curr = n_ways(x - i*k, denominations)[0]
+                res_dict['(' + str(n) + ',' + str(k) + ',' + str(i) + ')'] = curr
+                res += curr
+    return res, res_dict
+
+n, res_dict = n_ways(1000)
+# print(res_dict)
+print(n)
 # the solution above is correct
 # now we need to actually print a list of all of the different combinations
