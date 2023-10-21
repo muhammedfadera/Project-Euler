@@ -46,3 +46,5 @@ n, res_dict = n_ways(1000)
 print(n)
 # the solution above is correct
 # now we need to actually print a list of all of the different combinations
+
+
