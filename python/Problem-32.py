@@ -10,136 +10,165 @@ We shall say that an n-digit number is pandigital if it makes use of all the
  HINT: Some products can be obtained in more than
        one way so be sure to only include it once in your sum.
 
- Apporach:
- 1. Reduce the number of possibilities by grouping together compatible numbers
-     Two numbers are compatible if their product
-     - does not contain any of the digits contained in the previous
- 2. List the possibilities for the last digit and then reduce the number of the
- second and the third and so on given the previous digits.
 '''
 
+#--------------------------- APPROACH -------------------------------------------#
+# 1. We are seeking for three numbers X, Y and Z so that X times Y = Z. We first note this excludes
+#    the possibility of the number of digits Z to be 1, 2 or 3 - e.g for Z to be 3 digit, both X
+#    and Y must be 3 digit. However, the product of the two smallest 3 digit numbers is 100 * 100
+#    which is not 3 digit number. 
+# 2. The number of digits in Z is no more than 4 since (considering that there are only six digits
+#    left for this possibility)
+#   a. the product of 2 three digit number (at least those of interest to us) is at least a four
+#      digit number (as above),
+#   b. the product of 2 digit number and 4 digit number is at least 5 digits
+# 3. Hence the only possibilities we have is Z4 = X2 times Y3 or Z4 = X1 times Y4 where the numbers 
+#    after the letters signifies the number of digits. 
+# 4. So the largest value of Z is 9999.
+# 5. So a first step here would be to include all numbers starting from 9999 that
+#   a. do not contain any 0,
+#   b. do not repeat numbers from 1 to 9 two or more times.
+#   c. is not prime.
+#   as the set of all possible values of Z. 
+
 #%%
-import numpy as np
-N_DIGITS = 0 # keeps track of the number of digits used sofar
-multiplicand_digits_tracker = dict() # a key-value pair of the place value and the digit in the multiplicand
-results_digits_tracker = dict() # ... in the product
-x = np.arange(1, 10) # numbers from 1 to 9
-# pairwise produce of no. from 1 to 9
-multiplication_table = np.outer(x, x)
-# print(multiplication_table)
+def rep_digits(str_num):
+      '''
+      Returns true is str_num has digit that is repeated more than onces. It checks
+      if the number of unique numbers is equal to the number of digits in the input
+      '''
+      unique_str = ''
+      l = 0
+      for i in str_num:
+            if i not in unique_str:
+                  unique_str += i
+                  l += 1
+      return len(str_num) != l
 
-def multiply(a, b):
-    '''
-    return the product of a and b
-    '''
-    return multiplication_table[a-1, b-1]
+def intersest(x, y):
+      '''
+      returns false if there are digits in x that are in y or vice verse
+      '''
+      x = str(x)
+      y = str(y)
+      # picks x to be the one with more digits
+      if len(y) > len(x):
+            temp = x
+            x = y
+            y = temp
+      for i in x:
+            if i in y:
+                  return True
+      return False
 
-def nums_from_keys(x):
-    '''
-    return the number a, b from a dictionary key whose value is
-    a*b
-    '''
-    res = x.split(x)
-    a, b = res[0], res[1]
-    return a, b
-def n_digit(x, n):
-    '''
-    returns the n^th digit starting from the unit as the
-    zeroth digit
-    '''
-    return int(str(x)[-1*(n + 1)])
-def addition_table(x, y, repetitions = False):
-    res = dict()
-    for k1, i in x.items():
-        for k2, j in y.items():
-            res_keys = res.keys()
-            cond1 = k1 + '+' + k2 not in res_keys
-            if cond1:
-                if not repetitions and (i == j):
-                    next
-                else:
-                    res[k1 + '+' + k2] = i + j
-    return res
-# x = {str(i):i for i in range(1, 10)}
-# print(addition_table(x, x))
-# print(addition_table(range(10), range(10)))
-# print(n_digit(40, 1))
-# the maximum number of elements in the multiplication table
-N = 9*9
-# compatible = [None]*N
-# mt for multiplication table
-reduced_table = dict()
-compatible = dict()
-carrys = dict()
-compt_digit = 1
-carry_digit = 1
-for i in range(1, 10):
-    for j in range(i+1, 10):
-        p = multiply(i, j)
-        reduced_table[str(i) + ',' + str(j)] = p
-        last_digit = p % 10
-        if i != last_digit and j != last_digit and \
-                last_digit != 0:
-            # here we are only storing the indices
-            # to find the product we just use multiply
-            # compatible[ix] = [[i], [j]]
-            curr_key = str(i) + '*' + str(j)
-            compatible[curr_key] = last_digit
-            # curr_carry_key = str(carry_digit) + '-c-' + curr_key
-            remaining_digits = str(p - last_digit)[:-1]
-            if len(remaining_digits) != 0 and int(remaining_digits) != 0:
-                carrys[curr_key] = int(remaining_digits)
-# count the first digit of the first and the first digit of the second
-# and the first digit of the results
-N_DIGITS += 3 #
+def all_digits_1_to_9(x, y, z):
+      '''
+      checks if the combination of x, y and z contains all digits from 1 to 9 onces
+      '''
+      xyz = str(x) + str(y) + str(z)
+      if len(xyz) != 9:
+            return False
+      for i in range(1, 10):
+            if str(i) not in xyz:
+                  return False
+      return True
 
-result_last_digits = set(compatible.values())
-possible_last_digits = list()
-for k in compatible.keys():
-    possible_last_digits.extend(k.split('*'))
-possible_last_digits = [*set(possible_last_digits), ]
-# update possible last digits in the multiplicand and the product
-multiplicand_digits_tracker[1] = possible_last_digits
-results_digits_tracker[1] = results_digits_tracker
-# print(possible_last_digits)
-# ------------ SECOND DIGITS ---------------------- #
-second_digits = []
-excluded = []
-for k, d in compatible.items():
-    pair = k.split('*')
-    a, b = int(pair[0]), int(pair[1])
-    x = multiplication_table[a-1, :]
-    y = multiplication_table[b-1, :]
-    x[[a-1, b-1]] = 0
-    y[[a-1,b-1]] = 0
-    x_ = {str(a) + '*' + str(i+1):x[i] for i in range(9) if x[i] != 0}
-    y_ = {str(b) + '*' + str(i+1):y[i] for i in range(9) if y[i] != 0}
-    try:
-        k = str(a) + '*' + str(b)
-        c = carrys[k]
-        k_ = addition_table(x_, {str(c):c})
-        v_ = addition_table(y_, {str(c):c})
-    except KeyError:
-        k_ = x_
-        v_ = y_
-    # this ensures that the location of a or b is excluded
-    curr_add_table = {k:v for k, v in addition_table(k_, y_).items() \
-                      if str(v)[-1] not in ['0'] + possible_last_digits}
-    curr_add_table.update(
-        {k:v for k, v in addition_table(x_, v_).items() \
-         if str(v)[-1] not in ['0'] + possible_last_digits}
-    )
-    break
-    curr_digit = [*set([u%10 for u in curr_add_table.values()]),]
-    if len(curr_digit) == 0:
-        excluded += [k]
-    elif not set(curr_digit) <= set(second_digits):
-        second_digits += curr_digit
+#%% ----------------------------- X -------------------------------------------
+# X can only be a two or one digit number
+# Two digits X must be paired with a three digit of Y
+# and 1 digit X must be paired with 4 digit Y
+MIN_X = 9
+MAX_X = 99
+TEST_X = 39
 
-for k in excluded:
-    compatible.pop(k)
+X2 = []
 
-# print(second_digits)
-print(compatible)
+for num in range(MAX_X, MIN_X, -1):
+      str_num = str(num)
+      if num not in Z and ('0' in str_num or rep_digits(str_num)):
+            next
+      else:
+            X2.append(int(str_num))
+# one digit X to be paired with 4 digit Y
+X1 = range(1, 10)
 
+
+# print(f"The number of possibilities for X is no more than {len(X2) + len(X1)}")
+# if TEST_X in X:
+#       print(f"{TEST_X} is in X")
+
+#%%
+#----------------------------- Y ---------------------------------------#
+# Y must be a three digit or four digits since the product of two two digit 
+# number is atmost a 4 digit number and the product of a 1 digit number and 
+# 4 digit number could be 4 digits
+
+# 3 digit Ys to be paired with 2 digit X
+MIN_Y = 99
+MAX_Y = 999
+TEST_Y = 186
+
+Y3 = []
+
+for num in range(MAX_Y, MIN_Y, -1):
+      str_num = str(num)
+      if ('0' in str_num or rep_digits(str_num)):
+            next
+      else:
+            Y3.append(int(str_num))
+# four digit Ys to be paired with 1 digit X
+MIN_Y = 999
+MAX_Y = 9999
+# MAX_Y = MAX_Z
+
+Y4 = []
+
+for num in range(MAX_Y, MIN_Y, -1):
+      str_num = str(num)
+      if num not in Z and ('0' in str_num or rep_digits(str_num)):
+            next
+      else:
+            Y4.append(int(str_num))
+
+
+
+# print(f"The number of possibilities for Y is no more than {len(Y3) + len(Y4)}")
+# if TEST_Y in Y:
+#       print(f"{TEST_Y} is in Y")
+
+
+#---------------- ANSWER ! -----------------------------
+#%%
+output = 0
+count = 0
+ans = {}
+for x in X2:
+      for y in Y3:
+            if not intersest(x, y):
+                  prod = x*y
+                  cond1 = prod not in ans.keys()
+                  cond2 = all_digits_1_to_9(x, y, prod)
+                  if cond2 and cond1:
+                        output += prod
+                        count += 1
+                        ans[prod] = [[x, y]]
+                  if not cond1 and cond2:
+                        ans[prod].append([x, y])
+                  
+
+
+for x in X1:
+      for y in Y4:
+            if not intersest(x, y):
+                  prod = x*y
+                  cond1 = prod not in ans.keys()
+                  cond2 = all_digits_1_to_9(x, y, prod)
+                  if cond2 and cond1:
+                        output += prod
+                        count += 1
+                        ans[prod] = [[x, y]]
+                  if not cond1 and cond2:
+                        ans[prod].append([x, y])
+
+print(f"The sum of all pandigital products is {output}")
 # %%
