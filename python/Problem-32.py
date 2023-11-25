@@ -139,9 +139,12 @@ for num in range(MAX_Y, MIN_Y, -1):
 
 #---------------- ANSWER ! -----------------------------
 #%%
+
 output = 0
 count = 0
 ans = {}
+
+# 2 digits and 3 digits
 for x in X2:
       for y in Y3:
             if not intersest(x, y):
@@ -156,7 +159,7 @@ for x in X2:
                         ans[prod].append([x, y])
                   
 
-
+# 1 digits and 4 digits
 for x in X1:
       for y in Y4:
             if not intersest(x, y):
