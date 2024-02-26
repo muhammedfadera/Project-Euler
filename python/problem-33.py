@@ -33,6 +33,8 @@ d. Furthermore, since X goes into Y, both X and Y cannot be prime.
 
 # sets of all possible values of X and Y are 2 digit numbers
 #%%
+import time
+t0 = time.time()
 two_three_digit_primes = [11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 
                           53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
 
@@ -47,7 +49,6 @@ def gcd(a, b):
             b = b - a
     return a
 
-#%%
 
 n_digits = 2 # only two digit numbers
 

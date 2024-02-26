@@ -11,6 +11,7 @@
 
 # currency denominations
 # denominations = [25, 50, 10, 20, 50, 100, 200, 500, 1_000, 2_000]
+#%%
 denominations = [1, 2, 5, 10, 20, 50, 100, 200]
 denominations.sort(reverse = True)
 
@@ -41,7 +42,7 @@ def n_ways(x, den = denominations, res_dict = {}, atom = 1):
                 res += curr
     return res, res_dict
 
-n, res_dict = n_ways(1000)
+n, res_dict = n_ways(100)
 # print(res_dict)
 print(n)
 # the solution above is correct
