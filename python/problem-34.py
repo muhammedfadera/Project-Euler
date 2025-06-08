@@ -17,9 +17,11 @@ itself d. Maybe breadth first search?
 from math import factorial
 from math import comb
 
-fact = {i:factorial(i) for i in range(11)}
-#%%
-# # find the largest bound 
-# cond = True
-# x_0 = '9'
-# while cond:
+fact = {i:factorial(i) for i in range(10)}
+
+# %%
+fig, axs = plt.subplots(2, 1)
+axs[0].set_xlabel('yes')
+axs[0].legend() 
+axs[0].vlines(10)
+plt.show()
