@@ -9,17 +9,17 @@ Note: As 1! = 1 and 2! = 2 are not sums they are not included.
 # Can we think of the problem in terms of Problem 31 where the we consider a currency
 system where the denominations are from 1 to 9! and we are seeking for numbers 
 which are equal to some ordering of the digits its representation including repeats. 
+# use a directed graph with nodes encoded by (p, d) the place value d, and the digit 
+itself d. Maybe breadth first search?
 '''
 
 #%%
 from math import factorial
 from math import comb
 
-fact = {i:factorial(i) for i in range(10)}
-
-# %%
-fig, axs = plt.subplots(2, 1)
-axs[0].set_xlabel('yes')
-axs[0].legend() 
-axs[0].vlines(10)
-plt.show()
+fact = {i:factorial(i) for i in range(11)}
+#%%
+# # find the largest bound 
+# cond = True
+# x_0 = '9'
+# while cond:
