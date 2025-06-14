@@ -9,6 +9,11 @@ if dn represents the nth digit of the fractional part, the the value of
 """
 #%%
 # def champernowne(n):
+def number_n_digits(n_digits):
+    start_n_digits = int(str(1)* (n_digits - 1 > 0) + 
+                            '0'*((n_digits - 2)*(n_digits-2 > 0)) + '1')
+    end_n_digits = int(str(1) + n_digits*'0')
+    return n_digits * (end_n_digits - start_n_digits)
 x = ''
 N = [10**i for i in range(7)]
 # n = N.pop(0)
@@ -17,10 +22,11 @@ n_terms = 0
 # for i in range(2, n):
 # while True
 ix = 0
-d = []
-X = []
+# d = []
+# X = []
 cond = True
 # while len(N) >= 1:
+n_digits = 0
 for n in N:
     while n_terms < n:
         ix += 1
@@ -29,16 +35,33 @@ for n in N:
         # if n_terms >= n:
     idx = len(str(ix)) - (n_terms - n) - 1
     res *= int(str(ix)[idx])
-    # d.append(str(ix)[idx])
-    # X.append(x)
+    # d.append(str(ix))
+    # while n_terms < n:
+    #     n_digits += 1
+    #     n_terms += number_n_digits(n_digits)
+    # # n_digits_smaller = n_digits - 1
+    # n_terms_smaller = n_terms - number_n_digits(n_digits) 
+    # print(n_terms_smaller)
+    # n_terms = n_terms_smaller
+    # diff_to_smaller = n - n_terms_smaller
+    # smallest_n_digit_num = int('0' + '9'*(n_digits-1)*(n_digits - 1 > 0))
+                        
+    # while n_terms_smaller < n:
+    #     smallest_n_digit_num += 1
+    #     # x += str(ix)
+    #     n_terms_smaller += n_digits
+    #     # if n_terms >= n:
+    # # print(n_terms_smaller)
+    # # print(smallest_n_digit_num)
+    # # print(idx)
+    # idx = n_digits - (n_terms_smaller-n) - 1
+    # # idx = (n - n_terms_smaller)
+    # d.append(str(smallest_n_digit_num)[idx])
+    # res *= int(str(smallest_n_digit_num)[idx])
+    # n_digits -= 1
 
 print(res)
 #%%
-def number_n_digits(n_digits):
-    start_n_digits = int(str(1)* (n_digits - 1 > 0) + 
-                            '0'*((n_digits - 2)*(n_digits-2 > 0)) + '1')
-    end_n_digits = int(str(1) + n_digits*'0')
-    return n_digits * (end_n_digits - start_n_digits)
 def d_n(n):
     """
     """
