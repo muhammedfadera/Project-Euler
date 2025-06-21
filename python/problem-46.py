@@ -21,7 +21,7 @@ import time
 t1 = time.time()
 i = 2
 cond = False
-prime_list = [2]
+prime_list = set([2])
 while not cond:
     # print(f"i = {i}")
     n = 2*i - 1
@@ -32,7 +32,7 @@ while not cond:
             prime_cond = False
             break
     if prime_cond:
-        prime_list.append(n)
+        prime_list.add(n)
         continue
     else:
         failed_representations = 0
