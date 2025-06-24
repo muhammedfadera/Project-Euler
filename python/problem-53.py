@@ -15,5 +15,35 @@ and 0! = 1.
 It is not until n = 23 that a value exceeds one million:
 C(23, 10) = 1144066
 
-How many, not necessarily distinct, values of C(n, r) for 1 ≤ n ≤ 100 are greater than one million?
+How many, not necessarily distinct, values of C(n, r) for 1 ≤ n ≤ 100 
+are greater than one million?
 """
+#%%
+from time import time
+from functools import lru_cache
+@lru_cache
+def factorial(n):
+    if n == 1 or n == 0:
+        return 1
+    else:
+        return n*factorial(n-1)
+
+def n_choose_r(n, r):
+    return factorial(n)/(factorial(r)*factorial(n-r))
+
+t1 = time()
+N = 100
+lower_bound = 10**6
+n = 2
+res = 0
+while n <= N:
+    r = -1
+    turning_point = int(n/2 * (n % 2 == 0) + (n//2 + 1)*(n % 2 == 1))
+    while r < turning_point: 
+        r += 1
+        if n_choose_r(n, r) > lower_bound:
+            res += n - 2*r + 1
+            break
+    n += 1
+print(f"The result is {res}")
+print(f"Time taken: {time() - t1 :.2f}")
