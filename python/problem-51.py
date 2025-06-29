@@ -15,7 +15,9 @@ Find the smallest prime which, by replacing part of the number (not necessarily 
 # We will start with 5 digit numbers
 # We start with replacing 1 digit, then 2, then 3 and so on. 
 #%%
-from utilities import is_prime
+# from utilities import is_prime
+from gmpy2 import is_prime
+# from utilities import miller_rabin as is_prime
 from itertools import permutations
 from time import time
 t1 = time()
@@ -69,22 +71,22 @@ while n_family_found < n_family:
                             try:
                                 cond = primes_checked[int(N)]
                             except KeyError:
-                                if N[-1] in ['0', '2', '4', '6', '8', '5'] or \
-                                    any([int(N[-j:]) % 2**j == 0 for j in range(2, 7)]) or \
-                                    sum(int(d) for d in N) % 3 == 0:
-                                    # int(N[-2:]) % 4 == 0 or \
-                                    # int(N[-3:]) % 8 == 0 or \
-                                    # int(N[-4:]) % 16 == 0 or \
-                                    # int(N[-5:]) % 64 == 0 or \
-                                        cond = False
-                                        primes_checked[int(N)] = cond
-                                        continue
-                                #     elif is_prime(int(N)):
-                                #         cond = True
-                                else:
+                                # if N[-1] in ['0', '2', '4', '6', '8', '5'] or \
+                                #     any([int(N[-j:]) % 2**j == 0 for j in range(2, 7)]) or \
+                                #     sum(int(d) for d in N) % 3 == 0:
+                                #     # int(N[-2:]) % 4 == 0 or \
+                                #     # int(N[-3:]) % 8 == 0 or \
+                                #     # int(N[-4:]) % 16 == 0 or \
+                                #     # int(N[-5:]) % 64 == 0 or \
+                                #         cond = False
+                                #         primes_checked[int(N)] = cond
+                                #         continue
+                                # #     elif is_prime(int(N)):
+                                # #         cond = True
+                                # else:
                                     # cond = prime_sieve[int(N)] == 1
-                                    cond = is_prime(int(N))
-                                    primes_checked[int(N)] = cond
+                                cond = is_prime(int(N))
+                                primes_checked[int(N)] = cond
                             if cond:
                                 n_family_found += 1
                                 primes_found.append(int(N))

@@ -14,7 +14,8 @@ forward and backward pass
 """
 # from 
 #%%
-from utilities import is_prime
+from utilities import miller_rabin
+from gmpy2 import is_prime
 from time import time
 t1 = time()
 def is_prime_from_list(x, prime_list_less_than_x):
@@ -24,25 +25,27 @@ def is_prime_from_list(x, prime_list_less_than_x):
             return False
     return True
 
-min_seq_length = 6
+
+min_seq_length = 5
 primes_forward_pass = dict()
 prime_list_less_than_x = [2]
-prime_list = set([2])
+# prime_list = set([2])
 k = 3
-
-
 while True:
-    # if not is_multiple_of_3(k) and is_prime_from_list(k, prime_list_less_than_x):
-    if is_prime_from_list(k, prime_list_less_than_x):
+    # if is_prime_from_list(k, prime_list_less_than_x):
+    # if miller_rabin(k):
+    if is_prime(k):
         for p in prime_list_less_than_x:
             N = int("".join([str(p), str(k)]))
-            # if not is_multiple_of_3(N) and is_prime(N):
+            N_rev = int("".join([str(k), str(p)]))
+            # if is_prime(N):
+            # if miller_rabin(N):
             if is_prime(N):
-                prime_list.add(N)
-                N_rev = int("".join([str(k), str(p)]))
-                # if not is_multiple_of_3(N_rev) and is_prime(N_rev):
+                # prime_list.add(N)
+                # if is_prime(N_rev):
+                # if miller_rabin(N_rev):
                 if is_prime(N_rev):
-                    prime_list.add(N_rev)
+                    # prime_list.add(N_rev)
                     try:
                         primes_forward_pass[k].append(p)
                     except KeyError:
@@ -69,3 +72,4 @@ while True:
 
 print(f"Result is {sum(test_prime)}")
 print(f"Time taken: {time() - t1:.2f} seconds")
+# %%

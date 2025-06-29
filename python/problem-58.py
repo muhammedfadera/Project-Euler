@@ -22,7 +22,9 @@ each time (9, 11, 13, ...), at what side length does the ratio of primes along
 both diagonals first fall below 10%?
 """
 #%%
-from utilities import is_prime
+# from utilities import is_prime
+from gmpy2 import is_prime
+# from utilities import miller_rabin as is_prime
 from time import time
 t1 = time()
 n_diagonal = 1 # the one at the start
@@ -43,3 +45,5 @@ while prime_proportion >= 0.1:
 print("The side length at which the proportion of primes on",
       f"the diagonal falls below 10 percent is {n_sides}")
 print(f"Time taken: {time() - t1: .2f} seconds")
+
+# %%

@@ -19,5 +19,29 @@ from math import comb
 
 fact = {i:factorial(i) for i in range(10)}
 
-def isFactorial_sum(n):
-    
+def factorial_digit_sum(N): return sum(fact[int(d)] for d in str(N))
+
+#%%
+# def isFactorial_sum(n):
+N = 11
+# while True:
+n_digits = 2
+N = int('1' + (n_digits-1)*'0')
+res = 0
+factorial_digits = []
+while N <= 100000:
+    if str(N) == '5'*n_digits:
+        n_digits += 1
+        N = int('1' + (n_digits-1)*'0')
+    else:
+        N_fact = factorial_digit_sum(N)
+        if N_fact == N:
+            # print("we are here")
+            factorial_digits.append(N)
+            res += N
+    # elif len(str(N_fact)) > len(str(N)):
+    #     n_digits += 1
+    #     N = int('1' + (n_digits-1)*'0')
+    # else:
+    N += 1
+print(f"The set of such numbers {factorial_digits} with sum {res}")
